@@ -7,6 +7,8 @@ There is a simpliest game, where you have a blue square (you) must keep going fr
 ---
 
 ### **🚀 Begin**
+
+
 import pygame
 import sys
 import random
@@ -14,11 +16,18 @@ from abc import ABC, abstractmethod
 
 pygame.init()
 
-_Using some libraries:_ 
-_pygame_ - _to create and functioning the game_
-_sys_ - _to open and close the programm_
-_random_ - _to control enemy`s movement_
+
+
+
+# Using some libraries:
+pygame_ - _to create and functioning the game
+sys - to open and close the programm
+random - to control enemy`s movement
+
+
 ---
+
+
 # Constants
 WIDTH, HEIGHT = 800, 600
 PLAYER_SPEED = 7
@@ -30,68 +39,96 @@ RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 BLACK = (0, 0, 0)
 
-_Make the display and set RGB colors_
+# Make the display and set RGB colors
+
+
 ---
+
+
 # Initializing screen
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Escape")
 
 
-_Initialize screen and setting the name_
+# Initialize screen and setting the name
+
+
 ---
+
+
 # Abstract class
 class GameObject(ABC):
+
     @abstractmethod
     def draw(self):
         pass
 
-_Creating the Abstract class_
+
+# Creating the Abstract class
+
+
 ---
+
+
 # Base class
 class Entity(GameObject):
+
     def __init__(self, x, y, color, size):
         self._x = x  # Incapsulation
         self._y = y
         self.color = color
         self.size = size
-    
+        
     @property
     def x(self):
         return self._x
-    
     @property
     def y(self):
         return self._y
-    
     def draw(self):
         pygame.draw.rect(screen, self.color, (self._x, self._y, self.size, self.size))
 
-_First creating the following absract class_
-_Then we create incapsulated coordinates, that does not change outside the class. It prevets random collisions_
-_draw method is drawing our object, in our case rectangle_
+#First creating the following absract class
+
+# Then we create incapsulated coordinates, that does not change outside the class. It prevets random collisions. 
+Draw method is drawing our object, in our case rectangle
+
+
 ---
+
+
 # Multiple Inheritance to regulate speed
 class SpeedControl:
+
     def __init__(self, speed):
         self.speed = speed
-_It creates the class to regulate the speed_
+        
+# It creates the class to regulate the speed
+
+
 ---
+
+
 # Multilevel Inheritance 
 class MovingEntity(Entity, SpeedControl):
     def __init__(self, x, y, color, size, speed):
         Entity.__init__(self, x, y, color, size)
-        SpeedControl.__init__(self, speed)
-    
+        SpeedControl.__init__(self, speed) 
     @abstractmethod
     def move(self, *args):
         pass
-_Multilevel inheritance help us to regulate speed both the player and enemy and includes the SpeedControl class_
+#Multilevel inheritance help us to regulate speed both the player and enemy and includes the SpeedControl class
+
+
 ---
+
+
 # Player
 class Player(MovingEntity):
+
     def __init__(self, x, y, color, size, speed):
         super().__init__(x, y, color, size, speed)
-    
+        
     def move(self, keys):
         dx, dy = 0, 0
         if keys[pygame.K_LEFT]:
@@ -102,14 +139,19 @@ class Player(MovingEntity):
             dy = -self.speed
         if keys[pygame.K_DOWN]:
             dy = self.speed
-
+            
         self._x = (self._x + dx) % WIDTH
         self._y = (self._y + dy) % HEIGHT
-_Creating the player class_
-_Giving them the move method and attaching them to the keyboards keys_        
+# Creating the player class
+# Giving them the move method and attaching them to the keyboards keys
+
+
 ---
+
+
 # Enemy
 class Enemy(MovingEntity):
+
     def __init__(self, x, y, color, size, speed):
         super().__init__(x, y, color, size, speed)
     
@@ -118,12 +160,17 @@ class Enemy(MovingEntity):
         dy = self.speed if self._y < player.y else -self.speed if self._y > player.y else 0
         self._x += dx
         self._y += dy
-_Creating the Enemy class_
-_Giving them speed and direction based on player movement_
-_Attaching them to enemy_
+# Creating the Enemy class
+# Giving them speed and direction based on player movement
+# Attaching them to enemy 
+
+
 ---
+
+
 # Decorator for handling errors
 class ErrorHandler:
+
     @staticmethod
     def safe_execute(func):
         def wrapper(*args, **kwargs):
@@ -134,11 +181,16 @@ class ErrorHandler:
                 pygame.quit()
                 sys.exit()
         return wrapper
-_Prevevnting some Errors_
-_If they would be, system will close the game_
+# Prevevnting some Errors
+# If they would be, system will close the game
+
+
 ---
+
+
 # Game process
 class Game:
+
     def __init__(self):
         self.player = Player(WIDTH // 2, HEIGHT // 2, BLUE, 30, PLAYER_SPEED)
         self.enemy = Enemy(random.randint(0, WIDTH), random.randint(0, HEIGHT), RED, 30, ENEMY_SPEED)
@@ -166,17 +218,23 @@ class Game:
             self.enemy.draw()
             pygame.display.flip()
             self.clock.tick(30)
-_Creating a player object in the middle of the display_
-_Creating an enemy randomly in range of display area_
-_When they are running, display fill the white color_
-_Keys are accepting the player`s keyboard tapping_
-_Then we check the all players movements, including wheter we close the window, our system will crashes_
-_Updating the player movement by taking keyboard key and enemys movement updating if our updates_
-_Displaying all_
-_Updating the window flip()_
-_In case preventing crashing the system if our game will be faster_
+            
+# Creating a player object in the middle of the display
+# Creating an enemy randomly in range of display area
+# When they are running, display fill the white color
+# Keys are accepting the player`s keyboard tapping
+# Then we check the all players movements, including wheter we close the window, our system will crashes
+# Updating the player movement by taking keyboard key and enemys movement updating if our updates
+# Displaying all
+# Updating the window flip()
+# In case preventing crashing the system if our game will be faster
+
+
 ---
+
+
 def show_game_over(self):
+
         screen.fill(WHITE)
         font = pygame.font.Font(None, 50)
         text = font.render("You lost!", True, RED)
@@ -196,12 +254,17 @@ def show_game_over(self):
         screen.blit(home_text, (home_rect.x + 45, home_rect.y + 10))
         
         pygame.display.flip()
-_Filling the screen white when our objects collised_
-_Creating the legend "You lost!"_
-_Creating the buttons "Again" and "Exit"_
-_Drawing the buttons_
-_Updating the screen flip()_
+        
+# Filling the screen white when our objects collised
+# Creating the legend "You lost!"
+# Creating the buttons "Again" and "Exit"
+# Drawing the buttons
+# Updating the screen flip()
+
+
 ---
+
+
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -217,11 +280,13 @@ _Updating the screen flip()_
 
 Game().run()
 
-_Infinite cycle to play whether the player do not close the window_
-_Closing the window if player closed the window_
-_Closing the window if player decided to tap on "Exit"_
-_Restarting the game if the player decided to tap on "Again"_
-_Game().run() restarts the game from run method_
+# Infinite cycle to play whether the player do not close the window
+# Closing the window if player closed the window
+# Closing the window if player decided to tap on "Exit"
+# Restarting the game if the player decided to tap on "Again"
+# Game().run() restarts the game from run method
+
+
 ---
 I think the understanding was clear🚀
 
