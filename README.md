@@ -39,7 +39,7 @@ RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 BLACK = (0, 0, 0)
 
-# Make the display and set RGB colors
+Make the display and set RGB colors
 
 
 ---
@@ -50,7 +50,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Escape")
 
 
-# Initialize screen and setting the name
+Initialize screen and setting the name
 
 
 ---
@@ -64,7 +64,7 @@ class GameObject(ABC):
         pass
 
 
-# Creating the Abstract class
+Creating the Abstract class
 
 
 ---
@@ -88,10 +88,9 @@ class Entity(GameObject):
     def draw(self):
         pygame.draw.rect(screen, self.color, (self._x, self._y, self.size, self.size))
 
-#First creating the following absract class
-
-# Then we create incapsulated coordinates, that does not change outside the class. It prevets random collisions. 
-Draw method is drawing our object, in our case rectangle
+- First creating the following absract class
+- Then we create incapsulated coordinates, that does not change outside the class. It prevets random collisions. 
+- Draw method is drawing our object, in our case rectangle
 
 
 ---
@@ -103,7 +102,7 @@ class SpeedControl:
     def __init__(self, speed):
         self.speed = speed
         
-# It creates the class to regulate the speed
+- It creates the class to regulate the speed
 
 
 ---
@@ -111,13 +110,15 @@ class SpeedControl:
 
 # Multilevel Inheritance 
 class MovingEntity(Entity, SpeedControl):
+
     def __init__(self, x, y, color, size, speed):
         Entity.__init__(self, x, y, color, size)
         SpeedControl.__init__(self, speed) 
+        
     @abstractmethod
     def move(self, *args):
         pass
-#Multilevel inheritance help us to regulate speed both the player and enemy and includes the SpeedControl class
+- Multilevel inheritance help us to regulate speed both the player and enemy and includes the SpeedControl class
 
 
 ---
@@ -142,8 +143,8 @@ class Player(MovingEntity):
             
         self._x = (self._x + dx) % WIDTH
         self._y = (self._y + dy) % HEIGHT
-# Creating the player class
-# Giving them the move method and attaching them to the keyboards keys
+Creating the player class
+Giving them the move method and attaching them to the keyboards keys
 
 
 ---
@@ -160,9 +161,9 @@ class Enemy(MovingEntity):
         dy = self.speed if self._y < player.y else -self.speed if self._y > player.y else 0
         self._x += dx
         self._y += dy
-# Creating the Enemy class
-# Giving them speed and direction based on player movement
-# Attaching them to enemy 
+- Creating the Enemy class
+- Giving them speed and direction based on player movement
+- Attaching them to enemy 
 
 
 ---
