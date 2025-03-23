@@ -19,10 +19,10 @@ pygame.init()
 
 
 
-# Using some libraries:
-pygame_ - _to create and functioning the game
-sys - to open and close the programm
-random - to control enemy`s movement
+- Using some libraries:
+- pygame_ - _to create and functioning the game
+- sys - to open and close the programm
+- random - to control enemy`s movement
 
 
 ---
@@ -39,7 +39,7 @@ RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 BLACK = (0, 0, 0)
 
-Make the display and set RGB colors
+- Make the display and set RGB colors
 
 
 ---
@@ -50,7 +50,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Escape")
 
 
-Initialize screen and setting the name
+- Initialize screen and setting the name
 
 
 ---
@@ -64,7 +64,7 @@ class GameObject(ABC):
         pass
 
 
-Creating the Abstract class
+- Creating the Abstract class
 
 
 ---
@@ -143,8 +143,8 @@ class Player(MovingEntity):
             
         self._x = (self._x + dx) % WIDTH
         self._y = (self._y + dy) % HEIGHT
-Creating the player class
-Giving them the move method and attaching them to the keyboards keys
+- Creating the player class
+- Giving them the move method and attaching them to the keyboards keys
 
 
 ---
@@ -182,8 +182,8 @@ class ErrorHandler:
                 pygame.quit()
                 sys.exit()
         return wrapper
-# Prevevnting some Errors
-# If they would be, system will close the game
+- Prevevnting some Errors
+- If they would be, system will close the game
 
 
 ---
@@ -220,15 +220,15 @@ class Game:
             pygame.display.flip()
             self.clock.tick(30)
             
-# Creating a player object in the middle of the display
-# Creating an enemy randomly in range of display area
-# When they are running, display fill the white color
-# Keys are accepting the player`s keyboard tapping
-# Then we check the all players movements, including wheter we close the window, our system will crashes
-# Updating the player movement by taking keyboard key and enemys movement updating if our updates
-# Displaying all
-# Updating the window flip()
-# In case preventing crashing the system if our game will be faster
+- Creating a player object in the middle of the display
+- Creating an enemy randomly in range of display area
+- When they are running, display fill the white color
+- Keys are accepting the player`s keyboard tapping
+- Then we check the all players movements, including wheter we close the window, our system will crashes
+- Updating the player movement by taking keyboard key and enemys movement updating if our updates
+- Displaying all
+- Updating the window flip()
+- In case preventing crashing the system if our game will be faster
 
 
 ---
@@ -256,11 +256,11 @@ def show_game_over(self):
         
         pygame.display.flip()
         
-# Filling the screen white when our objects collised
-# Creating the legend "You lost!"
-# Creating the buttons "Again" and "Exit"
-# Drawing the buttons
-# Updating the screen flip()
+- Filling the screen white when our objects collised
+- Creating the legend "You lost!"
+- Creating the buttons "Again" and "Exit"
+- Drawing the buttons
+- Updating the screen flip()
 
 
 ---
@@ -281,11 +281,11 @@ def show_game_over(self):
 
 Game().run()
 
-# Infinite cycle to play whether the player do not close the window
-# Closing the window if player closed the window
-# Closing the window if player decided to tap on "Exit"
-# Restarting the game if the player decided to tap on "Again"
-# Game().run() restarts the game from run method
+- Infinite cycle to play whether the player do not close the window
+- Closing the window if player closed the window
+- Closing the window if player decided to tap on "Exit"
+- Restarting the game if the player decided to tap on "Again"
+- Game().run() restarts the game from run method
 
 
 ---
