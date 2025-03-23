@@ -5,28 +5,28 @@ from abc import ABC, abstractmethod
 
 pygame.init()
 
-# Константы
+# Constants
 WIDTH, HEIGHT = 800, 600
 PLAYER_SPEED = 6
 ENEMY_SPEED = 3
 
-# Цвета
+# Colors
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 BLACK = (0, 0, 0)
 
-# Инициализация экрана
+# Initializing screen
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Escape")
 
-# Абстрактный класс
+# Abstract class
 class GameObject(ABC):
     @abstractmethod
     def draw(self):
         pass
 
-# Базовый класс сущности
+# Base class
 class Entity(GameObject):
     def __init__(self, x, y, color, size):
         self._x = x  # Инкапсуляция
@@ -45,12 +45,12 @@ class Entity(GameObject):
     def draw(self):
         pygame.draw.rect(screen, self.color, (self._x, self._y, self.size, self.size))
 
-# Класс для управления скоростью (Multiple Inheritance)
+# Multiple Inheritance to regulate speed
 class SpeedControl:
     def __init__(self, speed):
         self.speed = speed
 
-# Промежуточный уровень наследования с множественным наследованием
+# Multilevel Inheritance 
 class MovingEntity(Entity, SpeedControl):
     def __init__(self, x, y, color, size, speed):
         Entity.__init__(self, x, y, color, size)
@@ -60,7 +60,7 @@ class MovingEntity(Entity, SpeedControl):
     def move(self, *args):
         pass
 
-# Игрок
+# Player
 class Player(MovingEntity):
     def __init__(self, x, y, color, size, speed):
         super().__init__(x, y, color, size, speed)
@@ -90,7 +90,7 @@ class Enemy(MovingEntity):
         self._x += dx
         self._y += dy
 
-# Декоратор для обработки ошибок
+# Decorator for handling errors
 class ErrorHandler:
     @staticmethod
     def safe_execute(func):
@@ -103,7 +103,7 @@ class ErrorHandler:
                 sys.exit()
         return wrapper
 
-# Игровой процесс
+# Game process
 class Game:
     def __init__(self):
         self.player = Player(WIDTH // 2, HEIGHT // 2, BLUE, 30, PLAYER_SPEED)
